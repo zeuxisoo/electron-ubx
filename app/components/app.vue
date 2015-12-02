@@ -64,6 +64,8 @@ require('bootstrap/less/bootstrap.less');
 require('bootstrap-material-design');
 require('bootstrap-material-design/dist/css/bootstrap-material-design.css');
 require('bootstrap-material-design/dist/css/ripples.css');
+require('material-design-icons/iconfont/material-icons.css');
+require('roboto-fontface');
 
 import Home from './home.vue'
 
