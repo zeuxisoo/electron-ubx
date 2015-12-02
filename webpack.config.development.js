@@ -2,6 +2,7 @@ var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var vue = require("vue-loader");
 var webpack = require("webpack");
+var discardComments = require('postcss-discard-comments');
 
 var buildPath = path.join(__dirname, "build");
 
@@ -50,15 +51,17 @@ module.exports = {
         }]
     },
     vue: {
-        css: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap!postcss-loader")
+        css: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap!postcss-loader?sourceMap")
+    },
+    postcss: function() {
+        return [discardComments({ removeAll: true })]
     },
     plugins: [
         new ExtractTextPlugin("bundle.css", {
             disable: false
         })
     ],
-    // devtool: 'eval',
-    // debug: true,
+    devtool: '#source-map',
     devServer: {
         stats: {
             cached: false
