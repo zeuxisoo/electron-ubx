@@ -1,6 +1,10 @@
 <template>
     <div id="home">
-        This is Home Page
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                This is Home
+            </div>
+        </div>
     </div>
 </template>
 

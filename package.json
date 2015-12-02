@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.6",
+    "bootstrap-material-design": "FezVrasta/bootstrap-material-design#0.5.1",
     "jquery": "^2.1.4",
     "vue": "^1.0.10",
     "vue-router": "^0.7.7"
