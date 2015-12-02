@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
-    "dev-watch": "webpack --config webpack.config.development.js --watch",
     "dev-server": "webpack-dev-server --config webpack.config.development.js --progress --colors --port 2992 --inline",
     "dev-start": "NODE_ENV=development electron ."
   },
