@@ -60,19 +60,19 @@ body {
 <script>
 require('jquery');
 require('bootstrap');
-require('bootstrap/less/bootstrap.less');
+require('bootstrap/dist/css/bootstrap.css');
 require('bootstrap-material-design');
 require('bootstrap-material-design/dist/css/bootstrap-material-design.css');
 require('bootstrap-material-design/dist/css/ripples.css');
 require('material-design-icons/iconfont/material-icons.css');
 require('roboto-fontface');
 
-import Home from './home.vue'
+import Core from './core.vue'
 
 export default {
     data() {
         return {
-            currentView: 'Home'
+            currentView: 'Core'
         }
     },
 
@@ -81,7 +81,7 @@ export default {
     },
 
     components: {
-        Home
+        Core
     },
 
     methods: {

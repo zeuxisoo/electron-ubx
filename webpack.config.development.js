@@ -3,6 +3,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var vue = require("vue-loader");
 var webpack = require("webpack");
 var discardComments = require('postcss-discard-comments');
+var StringReplacePlugin = require('string-replace-webpack-plugin');
 
 var buildPath = path.join(__dirname, "build");
 
@@ -28,6 +29,9 @@ module.exports = {
                 plugins: ['transform-runtime']
             }
         }, {
+            test: /\.json$/,
+            loader: 'json-loader'
+        }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap!postcss-loader?sourceMap")
         }, {
@@ -48,6 +52,20 @@ module.exports = {
         }, {
             test: /\.vue$/,
             loader: 'vue-loader'
+        }, {
+            // Fix
+            // - define cannot be used indirect in request/http-signature/jsprim/json-schema package
+            // - ref: https://github.com/kriszyp/json-schema/issues/59
+            test: /validate.js$/,
+            include: /node_modules\/json-schema/,
+            loader: StringReplacePlugin.replace({
+                replacements: [{
+                    pattern: /\(\{define:typeof define!="undefined"\?define:function\(deps, factory\)\{module\.exports = factory\(\);\}\}\)\./ig,
+                    replacement: function(match, p1, offset, string) {
+                        return false;
+                    }
+                }]
+            })
         }]
     },
     vue: {
@@ -59,7 +77,8 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin("bundle.css", {
             disable: false
-        })
+        }),
+        new StringReplacePlugin()
     ],
     devtool: '#source-map',
     devServer: {
