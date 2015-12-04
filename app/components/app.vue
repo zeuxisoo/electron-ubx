@@ -22,10 +22,10 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a class="hand" v-on:click=""><i class="material-icons icon-size-18">remove</i></a>
+                            <a class="hand" v-on:click="minimizeWindow()"><i class="material-icons icon-size-18">remove</i></a>
                         </li>
                         <li>
-                            <a class="hand" v-on:click=""><i class="material-icons icon-size-18">close</i></a>
+                            <a class="hand" v-on:click="closeWindow()"><i class="material-icons icon-size-18">close</i></a>
                         </li>
                     </ul>
                 </div>
@@ -67,7 +67,8 @@ require('bootstrap-material-design/dist/css/ripples.css');
 require('material-design-icons/iconfont/material-icons.css');
 require('roboto-fontface');
 
-import Core from './core.vue'
+import remote from 'remote';
+import Core from './core.vue';
 
 export default {
     data() {
@@ -87,6 +88,14 @@ export default {
     methods: {
         pathFor(name) {
 
+        },
+
+        minimizeWindow() {
+            remote.getCurrentWindow().minimize();
+        },
+
+        closeWindow() {
+            remote.getCurrentWindow().close();
         }
     }
 }
