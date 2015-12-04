@@ -12,10 +12,10 @@
                 </div>
                 <div class="navbar-collapse collapse navbar-responsive-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active">
+                        <li v-bind:class="{ 'active': isPathFor('core') }">
                             <a v-on:click="pathFor('core')">Core</a>
                         </li>
-                        <li>
+                        <li v-bind:class="{ 'active': isPathFor('about') }">
                             <a v-on:click="pathFor('about')">About</a>
                         </li>
                     </ul>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="container-fluid">
-            <component :is="currentView" keep-alive></component>
+            <component :is="currentView"></component>
         </div>
     </div>
 </template>
@@ -69,6 +69,7 @@ require('roboto-fontface');
 
 import remote from 'remote';
 import Core from './core.vue';
+import About from './about.vue';
 
 export default {
     data() {
@@ -82,12 +83,22 @@ export default {
     },
 
     components: {
-        Core
+        Core,
+        About
     },
 
     methods: {
-        pathFor(name) {
+        isPathFor(name) {
+            return this.currentView.toLowerCase() === name.toLowerCase()
+        },
 
+        pathFor(name) {
+            const routerMapper = {
+                core : 'Core',
+                about: 'About'
+            }
+
+            this.currentView = routerMapper[name];
         },
 
         minimizeWindow() {
