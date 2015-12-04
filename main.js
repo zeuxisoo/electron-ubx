@@ -7,14 +7,7 @@ require('crash-reporter').start();
 
 let mainWindow = null;
 
-app.on('window-all-closed', () => {
-    if (process.platform != 'darwin') {
-        app.quit();
-    }
-});
-
-app.on('ready', () => {
-
+const openMainWindow = () => {
     mainWindow = new BrowserWindow({
         width : 800,
         height: 650,
@@ -34,5 +27,18 @@ app.on('ready', () => {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+}
 
+app.on('window-all-closed', () => {
+    if (process.platform != 'darwin') {
+        app.quit();
+    }
 });
+
+app.on('activate', (event, hasVisibleWindows) => {
+    if (hasVisibleWindows === false) {
+        openMainWindow()
+    }
+})
+;
+app.on('ready', () => openMainWindow());
