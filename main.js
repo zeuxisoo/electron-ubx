@@ -16,11 +16,12 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
 
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        frame: false,
+        width : 800,
+        height: 650,
+        frame : false,
         // transparent: true,
-        // resizable: false
+        resizable: false,
+        center: true
     });
 
     if (process.env.NODE_ENV === 'development') {
