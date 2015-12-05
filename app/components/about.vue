@@ -4,12 +4,12 @@
             <div class="panel-heading">Your Info</div>
             <div class="panel-body">
                 <div class="row row-margin">
-                    <div class="col-xs-3 text-right"><strong>Username</strong>:</div>
-                    <div class="col-xs-9">{{ yourInfo.username }}</div>
+                    <div class="col-xs-3 text-right"><strong>Home</strong>:</div>
+                    <div class="col-xs-9">{{ yourInfo.home }}</div>
                 </div>
                 <div class="row row-margin">
-                    <div class="col-xs-3 text-right"><strong>Home Path</strong>:</div>
-                    <div class="col-xs-9">{{ yourInfo.homePath }}</div>
+                    <div class="col-xs-3 text-right"><strong>App Data</strong>:</div>
+                    <div class="col-xs-9">{{ yourInfo.appData }}</div>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="row row-margin">
                     <div class="col-xs-3 text-right"><strong>Version</strong>:</div>
-                    <div class="col-xs-9">v0.1.0</div>
+                    <div class="col-xs-9">v0.1.1</div>
                 </div>
                 <div class="row row-margin">
                     <div class="col-xs-3 text-right"><strong>Kernel</strong>:</div>
@@ -45,7 +45,12 @@
             <div class="panel-body panel-change-logs">
                 <div class="row row-margin">
                     <div class="col-xs-12">
-                        <h5>2015.12.05</h5>
+                        <h5>2015.12.05 - 0.1.1</h5>
+                        <ul class="change-logs-list">
+                            <li>- Fix your info display incorrect in about page</li>
+                        </ul>
+                        <br>
+                        <h5>2015.12.05 - 0.1.0</h5>
                         <ul class="change-logs-list">
                             <li>- Finish 0.1.0</li>
                             <li>- Support to show the events list by event number</li>
@@ -75,6 +80,8 @@
 </style>
 
 <script>
+import remote from 'remote';
+
 export default {
 
     data() {
@@ -85,9 +92,11 @@ export default {
     },
 
     ready() {
+        let app = remote.app;
+
         this.yourInfo = {
-            username: process.env.USER,
-            homePath: process.env.HOME
+            home   : app.getPath("home"),
+            appData: app.getPath("appData")
         }
 
         this.applicationInfo = {
@@ -95,8 +104,6 @@ export default {
             platform: process.platform,
             arch    : process.arch
         }
-
-        console.log(process)
     }
 
 }
