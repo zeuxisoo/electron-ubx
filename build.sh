@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Remove dist, appicon.iconset directory first
+# Remove dist, appicon.iconset directory, built platform apps first
 rm -rf dist
 rm -rf ./appicon.iconset
+rm -rf Ubx-*
 
 # Build dist assets
 npm run dist-build
@@ -43,6 +44,17 @@ convert ./artwork/icon.png  -bordercolor white -border 0 \
           \( -clone 0 -resize 64x64 \) \
           -delete 0 -alpha off -colors 256 ./dist/icon.ico
 
-# Package app
-./node_modules/.bin/electron-packager ./dist Ubx --platform=darwin --arch=x64 --version=0.35.4 --icon=./dist/icon.icns
-./node_modules/.bin/electron-packager ./dist Ubx --platform=win32 --arch=x64 --version=0.35.4 --icon=./dist/icon.ico
+# Package mac app
+./node_modules/.bin/electron-packager ./dist Ubx --platform=darwin --arch=x64 --version=0.35.4 --icon=./dist/icon.icns --asar --overwrite
+
+rm -rf ./Ubx-darwin-x64/LICENSES.chromium.html
+rm -rf ./Ubx-darwin-x64/LICENSE
+rm -rf ./Ubx-darwin-x64/version
+
+# Package win app
+./node_modules/.bin/electron-packager ./dist Ubx --platform=win32 --arch=x64 --version=0.35.4 --icon=./dist/icon.ico --asar --overwrite
+
+rm -rf ./Ubx-win32-x64/LICENSES.chromium.html
+rm -rf ./Ubx-win32-x64/LICENSE
+rm -rf ./Ubx-win32-x64/version
+rm -rf ./Ubx-win32-x64/resources/default_app
