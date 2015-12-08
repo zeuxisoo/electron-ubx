@@ -141,37 +141,41 @@ export default {
         },
 
         parseEvent(html) {
-            let $ = cheerio.load(html);
-            let eventTable = $("table#evt-perf-items-tbl");
-            let eventList  = eventTable.find("tr");
+            try {
+                let $ = cheerio.load(html);
+                let eventTable = $("table#evt-perf-items-tbl");
+                let eventList  = eventTable.find("tr");
 
-            let events = [];
+                let events = [];
 
-            eventList.each((eventIndex, eventItem) => {
-                // Calendar column
-                let calendar = $(eventItem).find("td.perf-cal-col .perf-cal-div");
-                let month    = calendar.find(".month").text().trim();
-                let date     = calendar.find(".date").text().trim();
-                let day      = calendar.find(".day").text().trim();
-                let year     = calendar.find(".year").text().trim();
+                eventList.each((eventIndex, eventItem) => {
+                    // Calendar column
+                    let calendar = $(eventItem).find("td.perf-cal-col .perf-cal-div");
+                    let month    = calendar.find(".month").text().trim();
+                    let date     = calendar.find(".date").text().trim();
+                    let day      = calendar.find(".day").text().trim();
+                    let year     = calendar.find(".year").text().trim();
 
-                // Other
-                let time = $(eventItem).find("td.perf-time-col span").text().replace(/\r?\n|\r/g, "").replace(/\s+/g, "").trim();
-                let name = $(eventItem).find("td.perf-name-col").text().trim();
+                    // Other
+                    let time = $(eventItem).find("td.perf-time-col span").text().replace(/\r?\n|\r/g, "").replace(/\s+/g, "").trim();
+                    let name = $(eventItem).find("td.perf-name-col").text().trim();
 
-                // Purchase column
-                let purchase = $(eventItem).find("td.perf-purchase-col .event-buy-status-col");
-                let buyState = purchase.find(".perf-limited-span").text().trim();
+                    // Purchase column
+                    let purchase = $(eventItem).find("td.perf-purchase-col .event-buy-status-col");
+                    let buyState = purchase.find(".perf-limited-span").text().trim();
 
-                // console.log(`${month} - ${date} - ${day} - ${year} - ${time} - ${name} - ${buyState}`)
+                    // console.log(`${month} - ${date} - ${day} - ${year} - ${time} - ${name} - ${buyState}`)
 
-                events.push({
-                    month, date, day, year, time, name, buyState
-                });
-            })
+                    events.push({
+                        month, date, day, year, time, name, buyState
+                    });
+                })
 
-            this.eventName = events[0].name;
-            this.events = events
+                this.eventName = events[0].name;
+                this.events = events
+            }catch(e) {
+                alert("Can not parse html content");
+            }
         }
     }
 }
