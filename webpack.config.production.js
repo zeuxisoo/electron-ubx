@@ -25,7 +25,7 @@ module.exports = {
             loader: "babel-loader",
             exclude: /node_modules/,
             query: {
-                presets: ['es2015'],
+                presets: ['es2015', 'stage-0'],
                 plugins: ['transform-runtime']
             }
         }, {
@@ -70,6 +70,10 @@ module.exports = {
     },
     vue: {
         css: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap!postcss-loader?sourceMap")
+    },
+    babel: {
+        presets: ['es2015', 'stage-0'],
+        plugins: ['transform-runtime']
     },
     postcss: function() {
         return [discardComments({ removeAll: true })]

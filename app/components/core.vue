@@ -94,15 +94,20 @@ export default {
     },
 
     methods: {
-        checkEventNumber() {
+        async checkEventNumber() {
             if (this.eventNumber.length <= 0 || /^[0-9]+$/.test(this.eventNumber) === false) {
                 alert('Please enter event number');
                 return;
             }
 
-            this.fetchAuth()
-                .then((response, body) => this.fetchList())
-                .catch(reason => alert(reason));
+            try {
+                await this.fetchAuth();
+            }catch(reason) {
+                alert(reason);
+                return;
+            }
+
+            this.fetchList();
         },
 
         fetchAuth() {
@@ -115,7 +120,7 @@ export default {
                     }else if (response.headers.location !== "https://ticket.urbtix.hk/") {
                         reject("Website response incorrect");
                     }else{
-                        resolve(response, body);
+                        resolve(body);
                     }
                 });
             });
